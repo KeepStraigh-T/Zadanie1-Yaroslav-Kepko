@@ -1,27 +1,71 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 	void cyklicky_posun_rychlo(int *p, int l, int s);
 	int gcd(int array_size, int shift_size);
-
-	int main(void)
+	void fill_array(int *array, int array_size);
+	
+	
+	int main(int argc, char **argv)
 		{
-			int array[6] = {5, 4, 2, 7, 8, 9};
-			int array_size = sizeof(array) / sizeof(array[0]);
+			srand(time(NULL));
 
-			printf("%d\n",gcd(array_size, 4));
+			if(argc < 3)
+				{
+					printf("Usage: %s <array_size> <shifts_number>\n", argv[0]);
+					return 1;
+				}
+
+			int array_size = atoi(argv[1]);
+			int shifts_number = atoi(argv[2]);
+			
+			if(array_size <= 0)
+				{
+					printf("Error: array_size must be a positive number\n");
+					return 1;
+				}
+			
+			if(shifts_number < 0)
+				{
+					printf("Error: shifts_number must be a non-negative number\n");
+					return 1;
+				}
+
+			int *array = calloc(array_size, sizeof(int));
+
+			if(array == NULL)
+				{
+					printf("Memory allocation failed\n");
+					return 1;
+				}
+
+			fill_array(array, array_size);
 
 			for(int i = 0; i < array_size; i++)
 				printf("%d ", array[i]);
-				puts("");
 
-			cyklicky_posun_rychlo(array, array_size, 4);
-
+			printf("\n");
+				
+			cyklicky_posun_rychlo(array, array_size, shifts_number);
+				
 			for(int i = 0; i < array_size; i++)
 				printf("%d ", array[i]);
 
+			printf("\n");
+
+			free(array);
 			return 0;
 		}
  
+	void fill_array(int *array, int array_size)
+		{
+			for(int i = 0; i < array_size; i++)
+				{
+					array[i] = rand() % 100;
+				}
+		}
+
 	int gcd(int array_size, int shift_size)
 		{
 			if(array_size == 0)
