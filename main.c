@@ -46,7 +46,7 @@ void cyklicky_posun_rychlo(int *p, int array_size, int shift_size)
 	// Loop through each cycle in the array
 	for(int start = 0; counter < array_size; start++)
 	{
-		current_index = start; // Start a new cycle
+		current_index = start; // Start of a new cycle
 		current_value = p[current_index]; // Store the value at the starting index
 
 		// Perform the cyclic shift for the current cycle
